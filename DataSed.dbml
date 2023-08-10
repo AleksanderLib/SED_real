@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SED" Class="DataSedDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=SED;Integrated Security=True" SettingsObjectName="SED_real.Properties.Settings" SettingsPropertyName="SEDConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Base_document" Member="Base_document">
+    <Type Name="Base_document">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DocumentKind" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocumentNumber" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="DocumentKind_Base_document" Member="DocumentKind1" ThisKey="DocumentKind" OtherKey="ID" Type="DocumentKind" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocumentKind" Member="DocumentKind">
+    <Type Name="DocumentKind">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Name_DocumentKind" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="DocumentKind_Base_document" Member="Base_document" ThisKey="ID" OtherKey="DocumentKind" Type="Base_document" />
+      <Association Name="DocumentKind_Incoming_Document" Member="Incoming_Document" ThisKey="ID" OtherKey="DocumentKind" Type="Incoming_Document" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Addressee" Member="Addressee">
+    <Type Name="Addressee">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FIO_Addressee" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Addressee_Incoming_Document" Member="Incoming_Document" ThisKey="ID" OtherKey="Addressee" Type="Incoming_Document" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CameFrom" Member="CameFrom">
+    <Type Name="CameFrom">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name_CameFrom" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="CameFrom_Incoming_Document" Member="Incoming_Document" ThisKey="ID" OtherKey="CameFrom" Type="Incoming_Document" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Counterparty" Member="Counterparty">
+    <Type Name="Counterparty">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name_Counterparty" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Counterparty_Incoming_Document" Member="Incoming_Document" ThisKey="ID" OtherKey="Counterparty" Type="Incoming_Document" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryMethod" Member="DeliveryMethod">
+    <Type Name="DeliveryMethod">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name_DeliveryMethod" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="DeliveryMethod_Incoming_Document" Member="Incoming_Document" ThisKey="ID" OtherKey="DeliveryMethod" Type="Incoming_Document" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Incoming_Document" Member="Incoming_Document">
+    <Type Name="Incoming_Document">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DocumentKind" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocumentNumber" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Addressee" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Counterparty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryMethod" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CameFrom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Addressee_Incoming_Document" Member="Addressee1" ThisKey="Addressee" OtherKey="ID" Type="Addressee" IsForeignKey="true" />
+      <Association Name="CameFrom_Incoming_Document" Member="CameFrom1" ThisKey="CameFrom" OtherKey="ID" Type="CameFrom" IsForeignKey="true" />
+      <Association Name="Counterparty_Incoming_Document" Member="Counterparty1" ThisKey="Counterparty" OtherKey="ID" Type="Counterparty" IsForeignKey="true" />
+      <Association Name="DeliveryMethod_Incoming_Document" Member="DeliveryMethod1" ThisKey="DeliveryMethod" OtherKey="ID" Type="DeliveryMethod" IsForeignKey="true" />
+      <Association Name="DocumentKind_Incoming_Document" Member="DocumentKind1" ThisKey="DocumentKind" OtherKey="ID" Type="DocumentKind" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
